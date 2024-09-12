@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import image from '../assets/waldo-image.jpeg'
 
 const WaldoImage = () => {
@@ -12,33 +12,14 @@ const WaldoImage = () => {
   const [showDropdown, setShowDropdown] = useState(false)
   const [selectedCharacter, setSelectedCharacter] = useState('')
 
+  const imageRef = useRef(null)
+
   useEffect(() => {
-    // // Fetch all character locations (this example only handles Waldo for now)
-    // fetch('http://localhost:8000/waldo-location')
-    //   .then((response) => response.json())
-    //   .then((data) => setWaldoLocation(data))
-
-    // // You can fetch other character locations similarly
-    // fetch('http://localhost:8000/wanda-location')
-    //   .then((response) => response.json())
-    //   .then((data) => setWandaLocation(data))
-
-    // fetch('http://localhost:8000/woof-location')
-    //   .then((response) => response.json())
-    //   .then((data) => setWoofLocation(data))
-
-    // fetch('http://localhost:8000/wizard-location')
-    //   .then((response) => response.json())
-    //   .then((data) => setWizardLocation(data))
-
-    // fetch('http://localhost:8000/odlaw-location')
-    //   .then((response) => response.json())
-    //   .then((data) => setOdlawLocation(data))
-    setWaldoLocation({ x: 610, y: 190 })
-    setWandaLocation({ x: 500, y: 670 })
-    setWoofLocation({ x: 1025, y: 420 })
-    setWizardLocation({ x: 910, y: 350 })
-    setOdlawLocation({ x: 170, y: 500 })
+    setWaldoLocation({ x: '43.5%', y: '20.0%' })
+    setWandaLocation({ x: '35.5%', y: '67.0%' })
+    setWoofLocation({ x: '73.5%', y: '47.5%' })
+    setWizardLocation({ x: '65.0%', y: '39.0%' })
+    setOdlawLocation({ x: '12.5%', y: '56.0%' })
   }, [])
 
   const handleClick = (event) => {
@@ -56,39 +37,35 @@ const WaldoImage = () => {
 
   const checkCharacterLocation = () => {
     const { x, y } = clickCoords
+    const imgWidth = imageRef.current.offsetWidth
+    const imgHeight = imageRef.current.offsetHeight
 
-    if (
-      selectedCharacter === 'Waldo' &&
-      Math.abs(x - waldoLocation.x) < 20 &&
-      Math.abs(y - waldoLocation.y) < 20
-    ) {
-      alert('You found Waldo!')
-    } else if (
-      selectedCharacter === 'Wanda' &&
-      Math.abs(x - wandaLocation.x) < 20 &&
-      Math.abs(y - wandaLocation.y) < 20
-    ) {
-      alert('You found Wanda!')
-    } else if (
-      selectedCharacter === 'Woof' &&
-      Math.abs(x - woofLocation.x) < 20 &&
-      Math.abs(y - woofLocation.y) < 20
-    ) {
-      alert('You found Woof’s tail!')
-    } else if (
-      selectedCharacter === 'Wizard' &&
-      Math.abs(x - wizardLocation.x) < 20 &&
-      Math.abs(y - wizardLocation.y) < 20
-    ) {
-      alert('You found Wizard Whitebeard!')
-    } else if (
-      selectedCharacter === 'Odlaw' &&
-      Math.abs(x - odlawLocation.x) < 20 &&
-      Math.abs(y - odlawLocation.y) < 20
-    ) {
-      alert('You found Odlaw!')
-    } else {
-      alert('Wrong choice, try again!')
+    const clickXPercent = (x / imgWidth) * 100
+    const clickYPercent = (y / imgHeight) * 100
+
+    const tolerance = 3
+
+    const locations = {
+      Waldo: waldoLocation,
+      Wanda: wandaLocation,
+      Woof: woofLocation,
+      Wizard: wizardLocation,
+      Odlaw: odlawLocation
+    }
+
+    const location = locations[selectedCharacter]
+    if (location) {
+      const targetXPercent = parseFloat(location.x)
+      const targetYPercent = parseFloat(location.y)
+
+      if (
+        Math.abs(clickXPercent - targetXPercent) < tolerance &&
+        Math.abs(clickYPercent - targetYPercent) < tolerance
+      ) {
+        alert(`You found ${selectedCharacter}!`)
+      } else {
+        alert('Wrong choice, try again!')
+      }
     }
   }
 
@@ -103,17 +80,18 @@ const WaldoImage = () => {
       <h2>Find the Characters!</h2>
       <div style={{ position: 'relative', display: 'inline-block' }}>
         <img
+          ref={imageRef}
           src={image}
           alt='Waldo'
           onClick={handleClick}
-          style={{ maxWidth: '1400px', width: '100%' }}
+          style={{ maxWidth: '1400px', minWidth: '1000px', width: '100%' }}
         />
         {showDropdown && (
           <div
             style={{
               position: 'absolute',
-              top: clickCoords.y - 20,
-              left: clickCoords.x,
+              top: `${clickCoords.y}px`,
+              left: `${clickCoords.x}px`,
               border: '2px solid red',
               width: '50px',
               height: '50px',
