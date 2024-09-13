@@ -14,6 +14,7 @@ const WaldoImage = () => {
   const [username, setUsername] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
   const [elapsedTime, setElapsedTime] = useState(0)
+  const apiUrl = process.env.REACT_APP_BACKEND_API_URL
 
   const imageRef = useRef(null)
   const navigate = useNavigate()
@@ -22,7 +23,7 @@ const WaldoImage = () => {
     setGameStarted(true)
     setStartTime(Date.now())
 
-    fetch('/api/characters')
+    fetch(`${apiUrl}/api/characters`)
       .then((response) => response.json())
       .then((data) => setCharacters(data))
       .catch((error) => console.error('Error fetching characters:', error))
@@ -85,7 +86,7 @@ const WaldoImage = () => {
   const handleSubmit = async () => {
     const totalTime = Math.floor((endTime - startTime) / 1000)
     try {
-      const response = await fetch('/api/submit-score', {
+      const response = await fetch(`${apiUrl}/api/submit-score`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -98,7 +99,7 @@ const WaldoImage = () => {
 
       if (response.ok) {
         alert(`Score submitted! Time: ${totalTime} seconds`)
-        navigate('/leaderboard')
+        navigate(`/leaderboard`)
       } else {
         alert('Error submitting score')
       }

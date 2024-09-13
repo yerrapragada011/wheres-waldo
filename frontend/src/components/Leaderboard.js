@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 
 const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([])
+  const apiUrl = process.env.REACT_APP_BACKEND_API_URL
 
   useEffect(() => {
-    fetch('/api/leaderboard')
+    fetch(`${apiUrl}/api/leaderboard`)
       .then((response) => response.json())
       .then((data) => setLeaderboard(data))
       .catch((error) => console.error('Error fetching leaderboard:', error))
-  }, [])
+  }, [apiUrl])
 
   return (
     <div
