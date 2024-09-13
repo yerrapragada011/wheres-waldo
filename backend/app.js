@@ -8,11 +8,7 @@ const app = express()
 
 app.use(express.json())
 app.use(bodyParser.json())
-app.use(
-  cors({
-    origin: 'https://wheres-waldo-mu.vercel.app'
-  })
-)
+app.use(cors())
 
 app.get('/api/characters', getCharacters)
 app.post('/api/submit-score', submitScore)
