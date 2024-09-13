@@ -8,8 +8,7 @@ const app = express()
 app.use(express.json())
 app.use(
   cors({
-    origin:
-      'https://wheres-waldo-6wk7yxvfj-yerrapragada011s-projects.vercel.app'
+    origin: 'https://wheres-waldo-mu.vercel.app'
   })
 )
 
