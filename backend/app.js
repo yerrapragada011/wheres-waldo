@@ -10,7 +10,13 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(
   cors({
-    origin: 'https://wheres-waldo-mu.vercel.app'
+    origin: 'https://wheres-waldo-mu.vercel.app',
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Access-Control-Allow-Methods',
+      'Access-Control-Request-Headers'
+    ]
   })
 )
 
