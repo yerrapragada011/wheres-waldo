@@ -14,6 +14,11 @@ app.use(
   })
 )
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  next()
+})
+
 app.get('/api/characters', getCharacters)
 app.post('/api/submit-score', submitScore)
 app.get('/api/leaderboard', leaderboardList)
