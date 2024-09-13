@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(
   cors({
-    origin: 'https://wheres-waldo-a07u1eyq2-yerrapragada011s-projects.vercel.app'
+    origin: 'https://wheres-waldo-mu.vercel.app'
   })
 )
 
