@@ -6,7 +6,12 @@ const { getCharacters, submitScore, leaderboardList } = require('./controller')
 const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+    origin:
+      'https://wheres-waldo-6wk7yxvfj-yerrapragada011s-projects.vercel.app'
+  })
+)
 
 app.get('/api/characters', getCharacters)
 app.post('/api/submit-score', submitScore)
