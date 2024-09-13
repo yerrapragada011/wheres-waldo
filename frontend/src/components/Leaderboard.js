@@ -6,7 +6,13 @@ const Leaderboard = () => {
   const apiUrl = process.env.REACT_APP_BACKEND_API_URL
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/leaderboard`)
+    fetch(`${apiUrl}/api/leaderboard`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
       .then((response) => response.json())
       .then((data) => setLeaderboard(data))
       .catch((error) => console.error('Error fetching leaderboard:', error))
