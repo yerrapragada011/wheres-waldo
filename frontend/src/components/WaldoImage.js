@@ -118,7 +118,7 @@ const WaldoImage = () => {
         }}
       >
         <h2>Welcome to Find the Characters!</h2>
-        <img src={instructionsImage} alt="Characters to find" />
+        <img src={instructionsImage} alt='Characters to find' />
         <button onClick={startGame}>Start Game</button>
         <Link to='/leaderboard'>View Leaderboard</Link>
       </div>
@@ -137,6 +137,17 @@ const WaldoImage = () => {
       <div style={{ marginBottom: '20px' }}>
         <h3>Elapsed Time: {elapsedTime} seconds</h3>
       </div>
+      {endTime && (
+        <>
+          <input
+            type='text'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder='Enter your username'
+          />
+          <button onClick={handleSubmit}>Submit Score</button>
+        </>
+      )}
       <div style={{ position: 'relative', display: 'inline-block' }}>
         <img
           ref={imageRef}
@@ -170,18 +181,6 @@ const WaldoImage = () => {
           </div>
         )}
       </div>
-
-      {endTime && (
-        <>
-          <input
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder='Enter your username'
-          />
-          <button onClick={handleSubmit}>Submit Score</button>
-        </>
-      )}
     </div>
   )
 }
