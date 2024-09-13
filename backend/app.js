@@ -14,6 +14,8 @@ app.use(
   })
 )
 
+app.options('*', cors())
+
 app.get('/api/characters', getCharacters)
 app.post('/api/submit-score', submitScore)
 app.get('/api/leaderboard', leaderboardList)
