@@ -24,7 +24,12 @@ const WaldoImage = () => {
     setStartTime(Date.now())
 
     fetch(`${apiUrl}/api/characters`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return response.json()
+      })
       .then((data) => setCharacters(data))
       .catch((error) => console.error('Error fetching characters:', error))
   }
