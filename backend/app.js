@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const { getCharacters, submitScore, leaderboardList } = require('./controller')
